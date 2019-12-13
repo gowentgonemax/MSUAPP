@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+       Login Panel
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content class="ion-padding" style="background-color: aquamarine;">
+
+     <div style="padding-top: 35%;">
+      <h1 class="ion-text-center"><b>Login Form</b></h1>  
+      <ion-item color="light">
+          <ion-label position="floating">Username</ion-label>
+          <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+        </ion-item>
+        <ion-item color="light">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="user.password" ></ion-input>         
+        </ion-item>
+        <ion-item>
+          <ion-checkbox onchange="rememberMe" [(ngModel)]="remeberMe" ></ion-checkbox>&nbsp;&nbsp;Remember me.
+        </ion-item>
+        <div>
+          <ion-button expand="block" color="success" (click)="btnLogin()" [disabled]="!user.username || !user.password">Login
+          </ion-button>
+          <ion-button expand="block" color="danger" (click)="btnSignUp()">Sign-Up</ion-button>
+        </div> 
+      </div>
+    
+</ion-content>

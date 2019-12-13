@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>View Schedule</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button></ion-buttons>
+        <ion-buttons slot="end">
+            <ion-back-button defaultHref="students"></ion-back-button>
+          </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="ion-padding">
+  
+
+  <ion-grid >
+        <ion-row *ngFor="let item of details; let i = index">
+          <ion-col size="12" size-md   >
+            <div>
+             Code: {{ item.Code }}
+            </div>
+          </ion-col>
+          <ion-col size="12" size-md   >
+            <div>
+             Name: {{ item.Name }}
+            </div>
+          </ion-col>
+          <ion-col size="12" size-md >
+            <div>
+             Location: {{ item.Location }}
+            </div>
+          </ion-col>
+          <ion-col size="12" size-md >
+            <div>
+             Instructor: {{ item.Instructor }}
+            </div>
+          </ion-col>
+          <ion-col size="12" size-md >
+              <div>
+                  <ion-button color="danger" size="small" (click)="delete(item)">Delete</ion-button>
+              </div>
+            </ion-col>    
+        </ion-row>
+
+        
+      </ion-grid>
+  
+  <div>
+    <p color="danger">Note: Currently, Edit/Delete feature has not been applied.</p>
+  </div>
+
+  
+</ion-content>

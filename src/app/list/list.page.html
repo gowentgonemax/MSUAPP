@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    
+    <ion-title>
+      The classes available
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div>
+      <ion-searchbar></ion-searchbar>
+
+  </div>
+<div>
+  <table align="center" >
+    <tr class="heading" >
+      <th style="padding: 5px;">Code</th>
+      <th style="padding: 5px;">Name</th>
+      <th style="padding: 5px;">Capacity</th>
+      <th style="padding: 5px;">Remaining</th>
+      <th style="padding: 5px;">Location</th>
+      <th style="padding: 5px;">Instructor</th>
+     
+    </tr>
+    <tr *ngFor="let item of classDescription; let i = index">
+        
+      <td style="border-right-style: dashed;">{{ item.Code }}</td>
+      <td>{{ item.Name }}</td>
+      <td>{{ item.Capacity }}</td>
+      <td>{{ item.Remaining }}</td>
+      <td>{{ item.Location }}</td>
+      <td>{{ item.Instructor }}</td>
+     
+    </tr>
+  </table>
+</div>
+
+</ion-content>

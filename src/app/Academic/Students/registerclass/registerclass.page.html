@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Register classes</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="students"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <ion-grid>
+    <ion-row class="heading" >
+      <ion-col   size="1" class="ion-align-self-start">
+        Code
+      </ion-col>
+      <ion-col  size-sm >
+        Name
+      </ion-col>
+      <ion-col  size-sm >
+        Capacity
+      </ion-col>
+      <ion-col  size-sm >
+          Remaining
+      </ion-col>
+      <ion-col  size-sm >
+          Location
+      </ion-col>
+      <ion-col  size-sm >
+          Instructor
+      </ion-col>
+      <ion-col  size-sm >
+          Register?
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of classDescription; let i = index" >
+      <ion-col   style="border-right-style: dashed; " size="1" >
+          {{ item.Code }}
+      </ion-col>
+      <ion-col>
+          {{ item.Name }}
+      </ion-col>
+      <ion-col  size-sm >
+          {{ item.Capacity }}
+      </ion-col>
+      <ion-col  size-sm >
+          {{ item.Remaining }}
+      </ion-col>
+      <ion-col  size-sm >     
+          {{ item.Location }}
+      </ion-col>
+      <ion-col  size-sm >
+          {{ item.Instructor }}
+      </ion-col>
+      <ion-col  size-sm >
+              <ion-checkbox style="text-align: center;" (ionChange)="onChecked($event,item)" [checked]="item.checked"
+              [(ngModel)]="item.register" [disabled]="(item.remaining === 0)"></ion-checkbox>
+      </ion-col>    
+    </ion-row>
+  </ion-grid>
+  
+  <div>
+    <ion-button color="success" expand="block" (click)="btnSubmit()">Submit</ion-button>
+  </div>
+
+  <ion-content>

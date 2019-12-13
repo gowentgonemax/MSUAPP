@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+      <ion-item>
+          <ion-label position="floating">First name</ion-label>
+          <ion-input type="text" [(ngModel)]="userInfo.fName"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">Last name</ion-label>
+          <ion-input type="text" [(ngModel)]="userInfo.lName"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">Major</ion-label>
+          <ion-input type="text" [(ngModel)]="userInfo.major"></ion-input>
+      </ion-item>
+    <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input type="text" [(ngModel)]="userInfo.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="text" [(ngModel)]="userInfo.password"></ion-input>
+  </ion-item>
+    <ion-item>
+        <ion-label position="floating"> Confirm Password</ion-label>
+        <ion-input type="text" [(ngModel)]="userInfo.cpassword"></ion-input>
+      
+    </ion-item>
+    <div>
+      <ion-button expand="block" color="success" (click)="btnSignup()" [disabled]="!userInfo.username || !userInfo.password || !userInfo.cpassword || !userInfo.fName || !userInfo.lName || !userInfo.major">Register</ion-button>
+      <ion-button expand="block" color="danger" (click)="btnCancel()">Cancel</ion-button>
+      </div>
+   
+ 
+</ion-content>

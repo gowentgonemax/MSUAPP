@@ -1,0 +1,32 @@
+
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+       Student portal
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+<ion-content class="ion-padding">
+  
+  <ion-card *ngFor="let item of userData" class="ion-padding" color="success">
+    <ion-card-header>
+   <h1> Personal Information</h1>
+  </ion-card-header>
+  <ion-card-content>
+      Name: {{item.FName}} {{item.LName}} <br>
+      Major: {{item.Major}}<br>
+      Email: {{item.Email}}
+  </ion-card-content>
+  </ion-card>
+  <div> 
+  </div>
+    <nav class="navCard">
+        <ion-button (click)="btnRegisterClass()" expand="block">Register Class</ion-button>
+        <ion-button (click)="btnViewSchedule()" expand="block">View Schedule</ion-button>
+      </nav>
+</ion-content>

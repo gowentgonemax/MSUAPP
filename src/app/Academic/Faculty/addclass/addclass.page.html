@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add new class</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+        <ion-label>Department Code ({{dptCode}})</ion-label>
+          <ion-select value="brown" [(ngModel)]="dptCode" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="ACC">Account</ion-select-option>
+              <ion-select-option value="CIS">Computer Information system</ion-select-option>
+              <ion-select-option value="JMC">Journalism Mass Communication</ion-select-option>
+              <ion-select-option value="CS">Computer Science</ion-select-option>
+              <ion-select-option value="CHE">Chemistry</ion-select-option>
+              <ion-select-option value="HMU">Humanities</ion-select-option>
+              <ion-select-option value="INF">Information Studies</ion-select-option>
+              <ion-select-option value="MAT">Mathematics and Statistics</ion-select-option>
+              <ion-select-option value="MIS">Militry Science</ion-select-option>
+
+
+            </ion-select>
+            
+  </ion-item>
+  <ion-item>
+          <ion-label position="floating">Class Code </ion-label>
+          <ion-input type="number" [(ngModel)]="classInfo.code"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating">Class Name</ion-label>
+    <ion-input type="text" [(ngModel)]="classInfo.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Instructor Name</ion-label>
+    <ion-input type="text" [(ngModel)]="classInfo.instructor"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Class Capacity</ion-label>
+    <ion-input type="number" [(ngModel)]="classInfo.capacity"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Location</ion-label>
+    <ion-input type="text" [(ngModel)]="classInfo.location"></ion-input>
+  </ion-item>
+  <div>
+    
+      <ion-button color="success" expand="block" (click)="btnSubmit()" size="medium"
+        [disabled]="!classInfo.code || !classInfo.name || !classInfo.instructor || !classInfo.capacity || !classInfo.location  || !dptCode">
+        Submit</ion-button>
+    
+    <ion-button color="danger" expand="block" (click)="btnCancel()" size="medium">Cancel</ion-button>
+  </div>
+
+
+  <div>
+      <ion-button color="dark" expand="block" (click)="btnTesting()" size="small">Test</ion-button>
+
+  </div>
+</ion-content>
