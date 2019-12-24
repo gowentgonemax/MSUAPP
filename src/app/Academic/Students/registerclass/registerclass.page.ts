@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CLASSINFO} from '../../classInfo.interface'
-import { Router } from '@angular/router'
-import { AngularFirestore } from '@angular/fire/firestore';
+import { DataService } from 'src/app/data.service';
+import { NavController } from '@ionic/angular'
 import { AlertController } from '@ionic/angular';
-import {ActivatedRoute} from '@angular/router'
-import { NavController} from '@ionic/angular'
-import { Storage } from '@ionic/storage';
-import { merge } from 'rxjs';
-import * as firebase from 'firebase/app'
-
 
 @Component({
   selector: 'app-registerclass',
@@ -17,103 +10,109 @@ import * as firebase from 'firebase/app'
 })
 export class RegisterclassPage implements OnInit {
 
-  classInfo={} as CLASSINFO;
-  public classDescription:any
-  public userName:string;
-  public uID:string;
-  collectionList: any[] = []
-  classCodeList: any[] = []
 
-  userID:any;
-  remaining:number=0
-  code:string;
-  collection: [
-      {
-        Name:any,
-        Code:any,
-        Location:any,
-        Capacity?:number,
-        Remaining?:number
-        Instructor:string
+  userId: string;
+  Student: any;
+  Students = [];
+  Classes = [];
+  selectedClasses = [];
+  User: any;
+  classToBeChanged = null;
 
-      }
-  ]
-  constructor(public router: Router,
-              private afStore: AngularFirestore,
-              public aCtrl: AlertController,
-              private activatedRoute:ActivatedRoute,
-              public storage:Storage,
-              private navCtrl:NavController) {
-               
-              }
+  constructor(
+    private ds: DataService,
+    private navCtrl: NavController,
+    private altCtrl: AlertController) {
 
+  }
   ngOnInit() {
-    
-    this.userID = firebase.auth().currentUser.uid //get the userID for current User
-    
-    this.afStore.collection('class').valueChanges().subscribe(data=>{
-      this.classDescription = data
-    },error => {
-      console.log(error);
-    });
-  }
- 
- 
-  onChecked(event,item){
-    
-    if (event.target.checked){
-      this.collection=[{
-        Name:item.Name,
-        Code:item.Code,
-        Location:item.Location,
-        Instructor:item.Instructor
-        
-      }]
-      this.remaining = item.Remaining-1
-      
-      this.collectionList.push(this.collection)
-    }
-    else if (!event.target.checked){
-      this.collection=[{
-        Name:item.Name,
-        Code:item.Code,
-        Location:item.Location,
-        Instructor:item.Instructor
-      }]
-      this.remaining =item.Remaining+1
-      this.collectionList.splice( this.collectionList.indexOf(this.collection), 1 );
-    }
-    this.code =item.Code
+    this.getUserId();
   }
 
-  async btnSubmit(){
+  getUserId() {
+    this.User = this.ds.getUserId();
 
-    var tempList: any[] = []
-     
-    
-      var docRef=this.afStore.collection('Students').doc(this.userID); //getting ref of data
-      (docRef.get().subscribe(data=>{
-        console.log('Data'+data[0])
-      }))
-      this.collectionList.forEach(element => {
-        tempList.push(element[0])
+    this.userId = this.User.uid;
+
+
+
+    this.getStudentById();
+    this.getClasses();
+  }
+
+
+  getStudents() {
+    this.ds.getStudents().subscribe((data) => {
+      this.Students = data;
+
+    })
+  }
+
+  getStudentById() {
+    this.ds.getStudentById(this.userId).subscribe((data) => {
+      this.Student = data;
+      let tempData: any = data;
+      if (tempData.ClassDetails) {
+        for (let i = 0; i < tempData.ClassDetails.length; i++) {
+          this.selectedClasses.push(tempData.ClassDetails[i].Code);
+        }
+      }
+    })
+  }
+
+  getClasses() {
+    this.ds.getClasses().subscribe((data) => {
+      this.Classes = data;
+    })
+  }
+
+  handleChanges(newClass: any) {
+    if (this.Student.ClassDetails) {
+      let tempData = this.Student.ClassDetails;
+      tempData = tempData.filter(x => x.Code === newClass.Code);
+      if (tempData.length > 0) {
+        this.Student.ClassDetails = this.Student.ClassDetails.filter(x => x.Code !== newClass.Code);
+      } else {
+        const tempnewClass = Object.assign({}, newClass);
+        delete tempnewClass.id;
+        this.Student.ClassDetails.push(tempnewClass);
+      }
+    } else {
+      this.Student.ClassDetails = [];
+      const tempnewClass = Object.assign({}, newClass);
+      delete tempnewClass.id;
+      this.Student.ClassDetails.push(tempnewClass);
+    }
+    this.classToBeChanged = newClass;
+  }
+
+  async handleSubmit() {
+    console.log(this.userId, this.Student);
+    this.ds.updateUser(this.userId, this.Student).then((data) => {
+
+      const tempClass: any = this.Classes.filter(x => x.Code === this.classToBeChanged.Code);
+      tempClass[0].Remaining = tempClass[0].Remaining - 1;
+      console.log('look here... the class which needs to be updated');
+      console.log(tempClass[0]);
+      this.ds.updateClass(tempClass[0].id, tempClass[0]).then((success) => {
+        console.log('successfully updated');
+      }).catch((e) => {
+        console.log('error updating class');
+        console.log(e);
+      })
+      //console.log('Updating user: ' + data);
+    })
+      .catch((e) => {
+        //console.log(e);
       });
-      
-      this.afStore.collection('class').doc(this.code).update({
-        Remaining:this.remaining
-      })
-      
-      docRef.update({
-          ClassDetails: tempList,
-      })
-
-      
-      const notFound = await this.aCtrl.create({
+    const alert = await this.altCtrl.create({
       header: 'Success',
-      message: 'You have registered successfully',
+      message: 'You have registered successfully.',
       buttons: ['OK']
     });
-    await notFound.present()
-    this.router.navigate(['students'])
+    await alert.present();
+    this.navCtrl.navigateRoot(['students'])
+
   }
+
 }

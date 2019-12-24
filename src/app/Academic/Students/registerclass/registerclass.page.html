@@ -11,61 +11,62 @@
 </ion-header>
 
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" content="width=device-width">
 
   <ion-grid>
-    <ion-row class="heading" >
-      <ion-col   size="1" class="ion-align-self-start">
+    <ion-row class="heading">
+      <ion-col size="1" class="ion-align-self-start">
         Code
       </ion-col>
-      <ion-col  size-sm >
+      <ion-col size-sm>
         Name
       </ion-col>
-      <ion-col  size-sm >
+      <ion-col size-sm>
         Capacity
       </ion-col>
-      <ion-col  size-sm >
-          Remaining
+      <ion-col size-sm>
+        Remaining
       </ion-col>
-      <ion-col  size-sm >
-          Location
+      <ion-col size-sm>
+        Location
       </ion-col>
-      <ion-col  size-sm >
-          Instructor
+      <ion-col size-sm>
+        Instructor
       </ion-col>
-      <ion-col  size-sm >
-          Register?
+      <ion-col size-sm>
+        Register?
       </ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let item of classDescription; let i = index" >
-      <ion-col   style="border-right-style: dashed; " size="1" >
-          {{ item.Code }}
+    <ion-row *ngFor="let data of Classes; ">
+      <ion-col style="border-right-style: dashed; " size="1">
+        {{ data.Code }}
       </ion-col>
       <ion-col>
-          {{ item.Name }}
+        {{ data.Name }}
       </ion-col>
-      <ion-col  size-sm >
-          {{ item.Capacity }}
+      <ion-col size-sm>
+        {{ data.Capacity }}
       </ion-col>
-      <ion-col  size-sm >
-          {{ item.Remaining }}
+      <ion-col size-sm>
+        {{ data.Remaining }}
       </ion-col>
-      <ion-col  size-sm >     
-          {{ item.Location }}
+      <ion-col size-sm>
+        {{ data.Location }}
       </ion-col>
-      <ion-col  size-sm >
-          {{ item.Instructor }}
+      <ion-col size-sm>
+        {{ data.Instructor }}
       </ion-col>
-      <ion-col  size-sm >
-              <ion-checkbox style="text-align: center;" (ionChange)="onChecked($event,item)" [checked]="item.checked"
-              [(ngModel)]="item.register" [disabled]="(item.remaining === 0)"></ion-checkbox>
-      </ion-col>    
+      <ion-col size-sm>
+        <ion-checkbox style="text-align: center;" color="dark"*ngIf="selectedClasses.includes(data.Code)" disabled ></ion-checkbox>
+        <ion-checkbox style="text-align: center;" *ngIf="!selectedClasses.includes(data.Code)" (click)="handleChanges(data)"></ion-checkbox>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <div>
-    <ion-button color="success" expand="block" (click)="btnSubmit()">Submit</ion-button>
+    <ion-button color="success" expand="block" (click)="handleSubmit()">Submit</ion-button>
   </div>
+
 
   <ion-content>

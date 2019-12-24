@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CLASSINFO} from '../Academic/classInfo.interface'
+import {classInfo} from '../Academic/classInfo.interface'
 import { AngularFirestore } from '@angular/fire/firestore';
 
 
@@ -10,7 +10,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
-  classInfo={} as CLASSINFO;
+  classInfo={} as classInfo;
   public classDescription:any
 
   

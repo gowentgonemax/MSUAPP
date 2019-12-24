@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CLASSINFO} from '../../classInfo.interface'
+import {classInfo} from '../../classInfo.interface'
 import {NavController} from '@ionic/angular'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
@@ -13,7 +13,7 @@ export class AddclassPage implements OnInit {
 
   dptCode:string
   code:string
-  classInfo={} as CLASSINFO;
+  classInfo={} as classInfo;
   constructor(public navCtrl: NavController,
               private afStore: AngularFirestore,
               public aCtrl: AlertController,
@@ -23,6 +23,7 @@ export class AddclassPage implements OnInit {
   async btnSubmit(){
     this.code = this.dptCode+this.classInfo.code
     this.classInfo.remaining = this.classInfo.capacity
+    
     try{
       const res = this.afStore.collection('/class').doc(this.code).set
       ({

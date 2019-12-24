@@ -43,12 +43,13 @@ export class SignupPage implements OnInit {
           .firestore()
           .doc(`/Students/${newUserCredential.user.uid}`)
           .set({
-              PersonalDetials:[{
+              PersonalDetials:{
               FName:this.userInfo.fName,
               LName:this.userInfo.lName,
               Major:this.userInfo.major,
-              Email:this.userInfo.username+this.domain
-              }]
+              Email:this.userInfo.username+this.domain,
+              Role : 'student'
+              }
               })
             
           })
